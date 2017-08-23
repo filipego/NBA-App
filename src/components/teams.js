@@ -46,13 +46,33 @@ class Teams extends Component {
     });
   }
 
+  searchTeam = (event) => {
+    const keyword = event.target.value;
+    if (keyword !== '') {
+      const list = this.state.teams.filter((item) => {
+        return item.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1
+      });
+      this.setState({
+        filtered: list,
+        keyword
+      })
+    } else {
+      this.setState({
+        filtered: this.state.teams,
+        keyword
+      })
+    }
+  }
+
   render() {
     return (
       <div className="teams_component">
         <div className="teams_input">
           <input
+            value={this.state.keyword}
             type="text"
             placeholder="Search for a team"
+            onChange={e => this.searchTeam(e)}
           />
         </div>
         <div className="teams_component">
